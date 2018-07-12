@@ -88,16 +88,16 @@ metadata {
         }
 
       	standardTile("aux1Status", "aux1Status", width: 1, height: 1, decoration: "flat") {
-            state "off", label: 'Aux1 ${currentValue}', action: "aux1On",
+            state "off", label: 'River ${currentValue}', action: "aux1On",
                   icon: "st.Appliances.appliances17", backgroundColor: "#ffffff"
-            state "on", label: 'Aux1 ${currentValue}', action: "aux1Off",
+            state "on", label: 'River ${currentValue}', action: "aux1Off",
                   icon: "st.Appliances.appliances17", backgroundColor: "#79b821"
         }
 
       	standardTile("aux2Status", "aux2Status", width: 1, height: 1, decoration: "flat") {
-            state "off", label: 'Aux2 ${currentValue}', action: "aux2On",
+            state "off", label: 'Falls ${currentValue}', action: "aux2On",
                   icon: "st.Appliances.appliances17", backgroundColor: "#ffffff"
-            state "on", label: 'Aux2 ${currentValue}', action: "aux2Off",
+            state "on", label: 'Falls ${currentValue}', action: "aux2Off",
                   icon: "st.Appliances.appliances17", backgroundColor: "#79b821"
         }
 
