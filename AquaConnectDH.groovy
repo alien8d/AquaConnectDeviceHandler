@@ -83,9 +83,9 @@ metadata {
                   icon: "st.Appliances.appliances17", backgroundColor: "#79b821"
         }
 		standardTile("spaStatus", "spaStatus", width: 1, height: 1, decoration: "flat") {
-            state "off", label: 'Filter ${currentValue}', action: "spaOn",
+            state "off", label: 'Spa ${currentValue}', action: "spaOn",
                   icon: "st.Bath.bath4", backgroundColor: "#ffffff"
-            state "on", label: 'Filter ${currentValue}', action: "spaOff",
+            state "on", label: 'Spa ${currentValue}', action: "spaOff",
                   icon: "st.Bath.bath4", backgroundColor: "#79b821"
         }
 
