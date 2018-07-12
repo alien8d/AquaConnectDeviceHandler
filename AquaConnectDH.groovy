@@ -22,7 +22,9 @@ metadata {
         
         command "filterOn"
         command "filterOff"
-        command "lightsOn"
+        command "spaOn"
+        command "spaOff"
+	command "lightsOn"
         command "lightsOff"        
         command "aux1On"
         command "aux1Off"
@@ -37,6 +39,7 @@ metadata {
         attribute "airTemp", "String"
         attribute "lightsStatus", "String"
         attribute "filterStatus", "String"
+	attribute "spaStatus", "String"
         attribute "currentMode", "String"
         attribute "heaterStatus", "String"
         attribute "aux1Status", "String"
@@ -79,6 +82,12 @@ metadata {
             state "on", label: 'Filter ${currentValue}', action: "filterOff",
                   icon: "st.Appliances.appliances17", backgroundColor: "#79b821"
         }
+		standardTile("spaStatus", "spaStatus", width: 1, height: 1, decoration: "flat") {
+            state "off", label: 'Filter ${currentValue}', action: "spaOn",
+                  icon: "st.Bath.bath4", backgroundColor: "#ffffff"
+            state "on", label: 'Filter ${currentValue}', action: "spaOff",
+                  icon: "st.Bath.bath4", backgroundColor: "#79b821"
+        }
 
      	standardTile("heaterStatus", "heaterStatus", width: 1, height: 1, decoration: "flat") {
             state "off", label: 'Heater ${currentValue}',
@@ -114,7 +123,7 @@ metadata {
 		}         
         
 		main "currentMode"
-		details(["currentMode", "poolTemp", "spaTemp", "airTemp", "filterStatus", "lightsStatus", "heaterStatus", "aux1Status", "aux2Status", "refresh", "line1","line2"])
+		details(["currentMode", "poolTemp", "spaTemp", "airTemp", "filterStatus", "spaStatus", "lightsStatus", "heaterStatus", "aux1Status", "aux2Status", "refresh", "line1","line2"])
 	}
 
     preferences {
@@ -226,6 +235,16 @@ def lightsOff() {
 	return postKey("WNewSt.htm", "09");
 }
 
+def spaOn() {
+	sendEvent(name: "spaStatus", value: "on", isStateChange: true)
+	return postKey("WNewSt.htm", "11");
+}
+
+def spaOff() {
+	sendEvent(name: "spaStatus", value: "off", isStateChange: true)
+	return postKey("WNewSt.htm", "11");
+}
+
 def aux1On() {
 	sendEvent(name: "aux1Status", value: "on", isStateChange: true)
 	return postKey("WNewSt.htm", "0A");
@@ -316,7 +335,9 @@ private String convertHexToIP(hex) {
     return [convertHexToInt(hex[0..1]),convertHexToInt(hex[2..3]),convertHexToInt(hex[4..5]),convertHexToInt(hex[6..7])].join(".")
 }
 
+//******************************************************************************************************************************
 //From this section on : leveraging JS code for AquaConnect HTTP Server, so all this code is copyrighted to the Hayward team
+//******************************************************************************************************************************
 private String getFirstLedStatus(asciiByte) {
 	return decodeRawLedData(extractNibbles(asciiByte).charAt(0))
 }
