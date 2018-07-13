@@ -15,21 +15,32 @@
 import groovy.json.JsonSlurper
 
 metadata {
-	definition (name: "Hayward Aqua Connect", namespace: "SteveTheGeekAH", author: "Steve The Geek") {
+    definition (name: "Hayward Aqua Connect", namespace: "SteveTheGeekAH", author: "Steve The Geek") {
         capability "Polling"
         capability "Refresh"
         capability "Switch"
         
-        command "filterOn"
-        command "filterOff"
         command "spaOn"
         command "spaOff"
-	command "lightsOn"
+        command "riverOn"
+        command "riverOff"
+        command "fallsOn"
+        command "fallsOff"   
+        command "lightsOn"
         command "lightsOff"        
-        command "aux1On"
-        command "aux1Off"
-        command "aux2On"
-        command "aux2Off"   
+        command "bubblesOn"
+        command "bubblesOff"        
+        command "boostOn"
+        command "boostOff"        
+        command "filterOn"
+        command "filterOff"
+        command "landscapeOn"
+        command "landscapeOff"        
+        command "heatherOn"
+        command "heaterOff"        
+        command "systemOn"
+        command "systemOff"        
+        command "heaterMode"
         command "changeMode"
         
         attribute "displayLine1", "String"
@@ -37,98 +48,151 @@ metadata {
         attribute "spaTemp", "String"
         attribute "poolTemp", "String"
         attribute "airTemp", "String"
+
+        attribute "spaStatus", "String"
+
+        attribute "systemStatus", "String"
+
+
+        attribute "poolStatus", "String"
+        attribute "boostStatus", "String"
+        attribute "bubblesStatus", "String"
+        attribute "landscapeStatus", "String"
+
         attribute "lightsStatus", "String"
         attribute "filterStatus", "String"
-	attribute "spaStatus", "String"
+        attribute "heaterMode", "String"
         attribute "currentMode", "String"
         attribute "heaterStatus", "String"
-        attribute "aux1Status", "String"
-        attribute "aux2Status", "String"
+        attribute "riverStatus", "String"
+        attribute "fallsStatus", "String"
         
-	}
+    }
 
-	simulator {
+    simulator {
 
-	}
+    }
     
-	tiles {
+    tiles {
     
-		valueTile("currentMode", "currentMode", width: 1, height: 1, canChangeIcon: true, decoration: "flat") {
-			state "default", label: '\n\n${currentValue}', action: "changeMode", backgroundColor: "#ffffff", icon: "st.Health & Wellness.health2"
-		} 
 
-		valueTile("poolTemp", "poolTemp", width: 1, height: 1, decoration: "flat") {
-			state "default", label: '${currentValue}', backgroundColor: "#ffffff"
-		} 
 
-		valueTile("spaTemp", "spaTemp", width: 1, height: 1, decoration: "flat") {
-			state "default", label: '${currentValue}', backgroundColor: "#ffffff"
-		} 
 
-		valueTile("airTemp", "airTemp", width: 1, height: 1, decoration: "flat") {
-			state "default", label: '${currentValue}', backgroundColor: "#ffffff"
-		} 
 
-     	standardTile("lightsStatus", "lightsStatus", width: 1, height: 1, decoration: "flat") {
-            state "off", label: 'Lights ${currentValue}', action: "lightsOn",
-                  icon: "st.Lighting.light21", backgroundColor: "#ffffff"
-            state "on", label: 'Lights ${currentValue}', action: "lightsOff",
-                  icon: "st.Lighting.light21", backgroundColor: "#79b821"
-        }
 
-		standardTile("filterStatus", "filterStatus", width: 1, height: 1, decoration: "flat") {
-            state "off", label: 'Filter ${currentValue}', action: "filterOn",
-                  icon: "st.Appliances.appliances17", backgroundColor: "#ffffff"
-            state "on", label: 'Filter ${currentValue}', action: "filterOff",
-                  icon: "st.Appliances.appliances17", backgroundColor: "#79b821"
-        }
-		standardTile("spaStatus", "spaStatus", width: 1, height: 1, decoration: "flat") {
+        standardTile("spaStatus", "spaStatus", width: 1, height: 1, decoration: "flat") {
             state "off", label: 'Spa ${currentValue}', action: "spaOn",
                   icon: "st.Bath.bath4", backgroundColor: "#ffffff"
             state "on", label: 'Spa ${currentValue}', action: "spaOff",
                   icon: "st.Bath.bath4", backgroundColor: "#79b821"
         }
 
-     	standardTile("heaterStatus", "heaterStatus", width: 1, height: 1, decoration: "flat") {
+        standardTile("riverStatus", "riverStatus", width: 1, height: 1, decoration: "flat") {
+            state "off", label: 'River ${currentValue}', action: "riverOn",
+                  icon: "st.Appliances.appliances17", backgroundColor: "#ffffff"
+            state "on", label: 'River ${currentValue}', action: "riverOff",
+                  icon: "st.Appliances.appliances17", backgroundColor: "#79b821"
+        }
+
+        standardTile("fallsStatus", "fallsStatus", width: 1, height: 1, decoration: "flat") {
+            state "off", label: 'Falls ${currentValue}', action: "fallsOn",
+                  icon: "st.Appliances.appliances17", backgroundColor: "#ffffff"
+            state "on", label: 'Falls ${currentValue}', action: "fallsOff",
+                  icon: "st.Appliances.appliances17", backgroundColor: "#79b821"
+        }
+
+         standardTile("lightsStatus", "lightsStatus", width: 1, height: 1, decoration: "flat") {
+            state "off", label: 'Lights ${currentValue}', action: "lightsOn",
+                  icon: "st.Lighting.light21", backgroundColor: "#ffffff"
+            state "on", label: 'Lights ${currentValue}', action: "lightsOff",
+                  icon: "st.Lighting.light21", backgroundColor: "#79b821"
+        }
+
+         standardTile("bubblesStatus", "bubblesStatus", width: 1, height: 1, decoration: "flat") {
+            state "off", label: 'Bubbles ${currentValue}', action: "lightsOn",
+                  icon: "st.Lighting.light21", backgroundColor: "#ffffff"
+            state "on", label: 'Bubbles ${currentValue}', action: "lightsOff",
+                  icon: "st.Lighting.light21", backgroundColor: "#79b821"
+        }
+
+         standardTile("boostStatus", "boostStatus", width: 1, height: 1, decoration: "flat") {
+            state "off", label: 'Boost ${currentValue}', action: "lightsOn",
+                  icon: "st.Lighting.light21", backgroundColor: "#ffffff"
+            state "on", label: 'Boost ${currentValue}', action: "lightsOff",
+                  icon: "st.Lighting.light21", backgroundColor: "#79b821"
+        }
+
+        standardTile("filterStatus", "filterStatus", width: 1, height: 1, decoration: "flat") {
+            state "off", label: 'Filter ${currentValue}', action: "filterOn",
+                  icon: "st.Appliances.appliances17", backgroundColor: "#ffffff"
+            state "on", label: 'Filter ${currentValue}', action: "filterOff",
+                  icon: "st.Appliances.appliances17", backgroundColor: "#79b821"
+        }
+
+        standardTile("landscapeStatus", "landscapeStatus", width: 1, height: 1, decoration: "flat") {
+            state "off", label: 'Landscape ${currentValue}', action: "filterOn",
+                  icon: "st.Appliances.appliances17", backgroundColor: "#ffffff"
+            state "on", label: 'Landscape ${currentValue}', action: "filterOff",
+                  icon: "st.Appliances.appliances17", backgroundColor: "#79b821"
+        }
+
+
+        valueTile("heaterStatus", "heaterStatus", width: 1, height: 1, canChangeIcon: true, decoration: "flat") {
+            state "default", label: '\n\n${currentValue}', action: "heaterStatus", backgroundColor: "#ffffff", icon: "st.Health & Wellness.health2"
+        } 
+
+                standardTile("heaterMode", "heaterMode", width: 1, height: 1, decoration: "flat") {
             state "off", label: 'Heater ${currentValue}',
                   icon: "st.Weather.weather2", backgroundColor: "#ffffff"
             state "on", label: 'Heater ${currentValue}',
                   icon: "st.Weather.weather2", backgroundColor: "#79b821"
         }
 
-      	standardTile("aux1Status", "aux1Status", width: 1, height: 1, decoration: "flat") {
-            state "off", label: 'River ${currentValue}', action: "aux1On",
-                  icon: "st.Appliances.appliances17", backgroundColor: "#ffffff"
-            state "on", label: 'River ${currentValue}', action: "aux1Off",
-                  icon: "st.Appliances.appliances17", backgroundColor: "#79b821"
+         standardTile("systemStatus", "systemStatus", width: 1, height: 1, decoration: "flat") {
+            state "off", label: 'System ${currentValue}', action: "lightsOn",
+                  icon: "st.Lighting.light21", backgroundColor: "#ffffff"
+            state "on", label: 'System ${currentValue}', action: "lightsOff",
+                  icon: "st.Lighting.light21", backgroundColor: "#79b821"
         }
 
-      	standardTile("aux2Status", "aux2Status", width: 1, height: 1, decoration: "flat") {
-            state "off", label: 'Falls ${currentValue}', action: "aux2On",
-                  icon: "st.Appliances.appliances17", backgroundColor: "#ffffff"
-            state "on", label: 'Falls ${currentValue}', action: "aux2Off",
-                  icon: "st.Appliances.appliances17", backgroundColor: "#79b821"
-        }
 
-		standardTile("refresh", "device.switch", decoration: "flat", width: 1, height: 1) {
+        standardTile("refresh", "device.switch", decoration: "flat", width: 1, height: 1) {
             state "default", action:"refresh", icon:"st.secondary.refresh"
         } 
 
-		valueTile("line1", "displayLine1", width: 3, height: 1, decoration: "flat") {
-			state "default", label: '${currentValue}', backgroundColor: "#ffffff"
-		} 
+        valueTile("currentMode", "currentMode", width: 1, height: 1, canChangeIcon: true, decoration: "flat") {
+            state "default", label: '\n\n${currentValue}', action: "changeMode", backgroundColor: "#ffffff", icon: "st.Health & Wellness.health2"
+        } 
 
-		valueTile("line2", "displayLine2", width: 3, height: 1, decoration: "flat") {
-			state "default", label: '${currentValue}', backgroundColor: "#ffffff"
-		}         
+        valueTile("poolTemp", "poolTemp", width: 1, height: 1, decoration: "flat") {
+            state "default", label: '${currentValue}', backgroundColor: "#ffffff"
+        } 
+
+        valueTile("spaTemp", "spaTemp", width: 1, height: 1, decoration: "flat") {
+            state "default", label: '${currentValue}', backgroundColor: "#ffffff"
+        } 
+
+        valueTile("airTemp", "airTemp", width: 1, height: 1, decoration: "flat") {
+            state "default", label: '${currentValue}', backgroundColor: "#ffffff"
+        } 
+
+
+
+        valueTile("line1", "displayLine1", width: 3, height: 1, decoration: "flat") {
+            state "default", label: '${currentValue}', backgroundColor: "#ffffff"
+        } 
+
+        valueTile("line2", "displayLine2", width: 3, height: 1, decoration: "flat") {
+            state "default", label: '${currentValue}', backgroundColor: "#ffffff"
+        }         
         
-		main "currentMode"
-		details(["currentMode", "poolTemp", "spaTemp", "airTemp", "filterStatus", "spaStatus", "lightsStatus", "heaterStatus", "aux1Status", "aux2Status", "refresh", "line1","line2"])
-	}
+        main "currentMode"
+        details(["currentMode", "poolTemp", "spaTemp", "airTemp", "filterStatus", "spaStatus", "lightsStatus", "heaterStatus", "riverStatus", "fallsStatus", "refresh", "line1","line2"])
+    }
 
     preferences {
 
-	}
+    }
 
 }
 
@@ -137,14 +201,14 @@ def parse(String description) {
     //log.debug(message)
     
     def responseLines = message.body.substring(message.body.indexOf("<body>")+6, message.body.indexOf("</body>")).tokenize('\n')
-	responseLines = responseLines.drop(1)
-	responseLines = responseLines.take(3)
+    responseLines = responseLines.drop(1)
+    responseLines = responseLines.take(3)
     
     
     def line1 = responseLines[0].substring(0, responseLines[0].length()-1)
 
-	//Clean up the string
-	line1 = line1.substring(0, line1.length()-3)
+    //Clean up the string
+    line1 = line1.substring(0, line1.length()-3)
     line1 = line1.replaceAll("&#176", "°")
     line1 = line1.replaceAll("[\u0000-\u001f]", "")
     line1 = line1.replaceAll("&nbsp;", " ")
@@ -153,26 +217,26 @@ def parse(String description) {
     }
         
     if(line1.contains("Spa Temp")) {
-    	log.debug("Spa temp changed");
-    	sendEvent(name: "spaTemp", value: line1, isStateChange: true)
+        log.debug("Spa temp changed");
+        sendEvent(name: "spaTemp", value: line1, isStateChange: true)
     }
 
     if(line1.contains("Air Temp")) {
-    	log.debug("Air temp changed");
-    	sendEvent(name: "airTemp", value: line1, isStateChange: true)
+        log.debug("Air temp changed");
+        sendEvent(name: "airTemp", value: line1, isStateChange: true)
     }
 
     if(line1.contains("Pool Temp")) {
-    	log.debug("Pool temp changed");
-    	sendEvent(name: "poolTemp", value: line1, isStateChange: true)
+        log.debug("Pool temp changed");
+        sendEvent(name: "poolTemp", value: line1, isStateChange: true)
     }
 
     log.debug(line1)
-	sendEvent(name: "displayLine1", value: line1, isStateChange: true)
+    sendEvent(name: "displayLine1", value: line1, isStateChange: true)
     
     def line2 = responseLines[1].substring(0, responseLines[1].length()-1)
 
-	//Clean up the string
+    //Clean up the string
     line2 = line2.substring(0, line2.length()-3)
     line2 = line2.replaceAll("&#176", "°")
     line2 = line2.replaceAll("[\u0000-\u001f]", "")
@@ -181,30 +245,40 @@ def parse(String description) {
        line2 = line2.substring(1)
     }
 
-	log.debug(line2)
-	sendEvent(name: "displayLine2", value: line2, isStateChange: true)
+    log.debug(line2)
+    sendEvent(name: "displayLine2", value: line2, isStateChange: true)
 
-	def line3 = responseLines[2].substring(0, responseLines[2].length()-1)
+    def line3 = responseLines[2].substring(0, responseLines[2].length()-1)
     line3 = line3.substring(0, line3.length()-3)
 
     log.debug("leds : ${line3}")
     
-	if(getFirstLedStatus(line3.charAt(0)) == "on") {
-    	sendEvent(name: "currentMode", value: "Pool", isStateChange: true)
+    if(getFirstLedStatus(line3.charAt(0)) == "on") {
+        sendEvent(name: "currentMode", value: "Pool", isStateChange: true)
     }
-	if(getSecondLedStatus(line3.charAt(0)) == "on") {
-    	sendEvent(name: "currentMode", value: "Spa", isStateChange: true)
+    if(getSecondLedStatus(line3.charAt(0)) == "on") {
+        sendEvent(name: "currentMode", value: "Spa", isStateChange: true)
     }
-	if(getFirstLedStatus(line3.charAt(1)) == "on") {
-    	sendEvent(name: "currentMode", value: "Spillover", isStateChange: true)
+    if(getFirstLedStatus(line3.charAt(1)) == "on") {
+        sendEvent(name: "currentMode", value: "Spillover", isStateChange: true)
     }
     
-    sendEvent(name: "filterStatus", value: getSecondLedStatus(line3.charAt(1)), isStateChange: true)
-    sendEvent(name: "lightsStatus", value: getFirstLedStatus(line3.charAt(2)), isStateChange: true)
-    sendEvent(name: "heaterStatus", value: getFirstLedStatus(line3.charAt(3)), isStateChange: true)
-    sendEvent(name: "aux1Status", value: getSecondLedStatus(line3.charAt(4)), isStateChange: true)
-    sendEvent(name: "aux2Status", value: getFirstLedStatus(line3.charAt(5)), isStateChange: true)
-    
+    sendEvent(name: "systemStatus", value: getFirstLedStatus(line3.charAt(1)), isStateChange: true)
+    sendEvent(name: "spaStatus", value: getFirstLedStatus(line3.charAt(2)), isStateChange: true)
+    sendEvent(name: "filterStatus", value: getFirstLedStatus(line3.charAt(3)), isStateChange: true)
+    sendEvent(name: "lightsStatus", value: getSecondLedStatus(line3.charAt(3)), isStateChange: true)
+
+    sendEvent(name: "heaterStatus", value: getFirstLedStatus(line3.charAt(4)), isStateChange: true)
+    sendEvent(name: "riverStatus", value: getSecondLedStatus(line3.charAt(5)), isStateChange: true)
+    sendEvent(name: "fallsStatus", value: getFirstLedStatus(line3.charAt(6)), isStateChange: true)
+    sendEvent(name: "boostStatus", value: getFirstLedStatus(line3.charAt(7)), isStateChange: true)
+    sendEvent(name: "bubblesStatus", value: getSecondLedStatus(line3.charAt(7)), isStateChange: true)
+    sendEvent(name: "landscapeStatus", value: getSecondLedStatus(line3.charAt(8)), isStateChange: true)
+
+
+
+
+
 }
 
 def poll() {
@@ -213,61 +287,111 @@ def poll() {
 }
 
 def refresh() {
-	return createGetRequest("WNewSt.htm");
+    return createGetRequest("WNewSt.htm");
+}
+
+def systemOn() {
+    sendEvent(name: "systemStatus", value: "on", isStateChange: true)
+    return postKey("WNewSt.htm", "04");
+}
+
+def systemOff() {
+    sendEvent(name: "systemStatus", value: "off", isStateChange: true)
+    return postKey("WNewSt.htm", "04");
 }
 
 def filterOn() {
-	sendEvent(name: "filterStatus", value: "on", isStateChange: true)
-	return postKey("WNewSt.htm", "08");
+    sendEvent(name: "filterStatus", value: "on", isStateChange: true)
+    return postKey("WNewSt.htm", "08");
 }
 
 def filterOff() {
-	sendEvent(name: "filterStatus", value: "off", isStateChange: true)
-	return postKey("WNewSt.htm", "08");
+    sendEvent(name: "filterStatus", value: "off", isStateChange: true)
+    return postKey("WNewSt.htm", "08");
 }
 def lightsOn() {
-	sendEvent(name: "lightsStatus", value: "on", isStateChange: true)
-	return postKey("WNewSt.htm", "09");
+    sendEvent(name: "lightsStatus", value: "on", isStateChange: true)
+    return postKey("WNewSt.htm", "09");
 }
 
 def lightsOff() {
-	sendEvent(name: "lightsStatus", value: "off", isStateChange: true)
-	return postKey("WNewSt.htm", "09");
+    sendEvent(name: "lightsStatus", value: "off", isStateChange: true)
+    return postKey("WNewSt.htm", "09");
 }
 
 def spaOn() {
-	sendEvent(name: "spaStatus", value: "on", isStateChange: true)
-	return postKey("WNewSt.htm", "11");
+    sendEvent(name: "spaStatus", value: "on", isStateChange: true)
+    return postKey("WNewSt.htm", "11");
 }
 
 def spaOff() {
-	sendEvent(name: "spaStatus", value: "off", isStateChange: true)
-	return postKey("WNewSt.htm", "11");
+    sendEvent(name: "spaStatus", value: "off", isStateChange: true)
+    return postKey("WNewSt.htm", "11");
 }
 
-def aux1On() {
-	sendEvent(name: "aux1Status", value: "on", isStateChange: true)
-	return postKey("WNewSt.htm", "0A");
+def heaterOn() {
+    sendEvent(name: "heatherMode", value: "on", isStateChange: true)
+    return postKey("WNewSt.htm", "13");
 }
 
-def aux1Off() {
-	sendEvent(name: "aux1Status", value: "off", isStateChange: true)
-	return postKey("WNewSt.htm", "0A");
+def heaterOff() {
+    sendEvent(name: "heaterMode", value: "off", isStateChange: true)
+    return postKey("WNewSt.htm", "13");
 }
 
-def aux2On() {
-	sendEvent(name: "aux2Status", value: "on", isStateChange: true)
-	return postKey("WNewSt.htm", "0B");
+def riverOn() {
+    sendEvent(name: "riverStatus", value: "on", isStateChange: true)
+    return postKey("WNewSt.htm", "0A");
 }
 
-def aux2Off() {
-	sendEvent(name: "aux2Status", value: "off", isStateChange: true)
-	return postKey("WNewSt.htm", "0B");
+def riverOff() {
+    sendEvent(name: "riverStatus", value: "off", isStateChange: true)
+    return postKey("WNewSt.htm", "0A");
+}
+
+def fallsOn() {
+    sendEvent(name: "fallsStatus", value: "on", isStateChange: true)
+    return postKey("WNewSt.htm", "0B");
+}
+
+def fallsOff() {
+    sendEvent(name: "fallsStatus", value: "off", isStateChange: true)
+    return postKey("WNewSt.htm", "0B");
+}
+
+def boostOn() {
+    sendEvent(name: "boostStatus", value: "on", isStateChange: true)
+    return postKey("WNewSt.htm", "0C");
+}
+
+def boostOff() {
+    sendEvent(name: "boostStatus", value: "off", isStateChange: true)
+    return postKey("WNewSt.htm", "0C");
+}
+
+def bubblesOn() {
+    sendEvent(name: "bubblesStatus", value: "on", isStateChange: true)
+    return postKey("WNewSt.htm", "0D");
+}
+
+def bubblesOff() {
+    sendEvent(name: "bubblesStatus", value: "off", isStateChange: true)
+    return postKey("WNewSt.htm", "0D");
+}
+
+def landscapeOn() {
+    sendEvent(name: "landscapeStatus", value: "on", isStateChange: true)
+    return postKey("WNewSt.htm", "0F");
+}
+
+def landscapeOff() {
+    sendEvent(name: "landscapeStatus", value: "off", isStateChange: true)
+    return postKey("WNewSt.htm", "0F");
 }
 
 def changeMode() {
-	sendEvent(name: "aux2Status", value: "off", isStateChange: true)
-	return postKey("WNewSt.htm", "07");
+    sendEvent(name: "changeMode", value: "off", isStateChange: true)
+    return postKey("WNewSt.htm", "07");
 }
 
 // gets the address of the hub
@@ -277,7 +401,7 @@ private getCallBackAddress() {
 
 private createGetRequest(String url) {
 
-	log.debug("/${url}")
+    log.debug("/${url}")
     
     def result = new physicalgraph.device.HubAction(
             method: "GET",
@@ -292,7 +416,7 @@ private createGetRequest(String url) {
 
 private postKey(String url, String key) {
 
-	log.debug("/${url}")
+    log.debug("/${url}")
     log.debug("KeyId:"+key);
     
     def result = new physicalgraph.device.HubAction(
@@ -339,73 +463,73 @@ private String convertHexToIP(hex) {
 //From this section on : leveraging JS code for AquaConnect HTTP Server, so all this code is copyrighted to the Hayward team
 //******************************************************************************************************************************
 private String getFirstLedStatus(asciiByte) {
-	return decodeRawLedData(extractNibbles(asciiByte).charAt(0))
+    return decodeRawLedData(extractNibbles(asciiByte).charAt(0))
 }
 
 private String getSecondLedStatus(asciiByte) {
-	return decodeRawLedData(extractNibbles(asciiByte).charAt(1))
+    return decodeRawLedData(extractNibbles(asciiByte).charAt(1))
 }
 
 private String extractNibbles(asciiByte) 
 {
-	def TwoChars; 
+    def TwoChars; 
 
     switch (asciiByte)
     {
-    	case "3":
-        	TwoChars = "33"; 
-        	break;
-      	case "4":
-        	TwoChars = "34"; 
-        	break;
-      	case "5":
-        	TwoChars = "35"; 
-        	break;
-      	case "6":
-        	TwoChars = "36"; 
-        	break;
-    	case "C":
-        	TwoChars = "43"; 
-        	break;
-      	case "D":
-        	TwoChars = "44"; 
-        	break;
-      	case "E":
-        	TwoChars = "45"; 
-        	break;
-      	case "F":
-        	TwoChars = "46"; 
-        	break;
+        case "3":
+            TwoChars = "33"; 
+            break;
+        case "4":
+            TwoChars = "34"; 
+            break;
+        case "5":
+            TwoChars = "35"; 
+            break;
+        case "6":
+            TwoChars = "36"; 
+            break;
+        case "C":
+            TwoChars = "43"; 
+            break;
+        case "D":
+            TwoChars = "44"; 
+            break;
+        case "E":
+            TwoChars = "45"; 
+            break;
+        case "F":
+            TwoChars = "46"; 
+            break;
 
-    	case "S":
-        	TwoChars = "53"; 
-        	break;
-      	case "T":
-        	TwoChars = "54"; 
-        	break;
-      	case "U":
-        	TwoChars = "55"; 
-        	break;
-      	case "V":
-        	TwoChars = "56"; 
-        	break;
-    	case "c":
-        	TwoChars = "63"; 
-        	break;
-      	case "d":
-        	TwoChars = "64"; 
-        	break;
-      	case "e":
-        	TwoChars = "65"; 
-        	break;
-      	case "f":
-        	TwoChars = "66"; 
-        	break;
+        case "S":
+            TwoChars = "53"; 
+            break;
+        case "T":
+            TwoChars = "54"; 
+            break;
+        case "U":
+            TwoChars = "55"; 
+            break;
+        case "V":
+            TwoChars = "56"; 
+            break;
+        case "c":
+            TwoChars = "63"; 
+            break;
+        case "d":
+            TwoChars = "64"; 
+            break;
+        case "e":
+            TwoChars = "65"; 
+            break;
+        case "f":
+            TwoChars = "66"; 
+            break;
       default:
         TwoChars = "00"; ; 
     }
 
-	return TwoChars;	
+    return TwoChars;    
 
 } 
 
@@ -415,22 +539,22 @@ private decodeRawLedData(NibData)
 
     switch ( NibData )
     {
-    	case "3":
-        	StrClassData = "NOKEY"; 
-        	break;
-      	case "4":
-        	StrClassData = "off"; 
-        	break;
-      	case "5":
-        	StrClassData = "on"; 
-        	break;
-      	case "6":
-        	StrClassData = "BLINK" ; 
-        	break;
+        case "3":
+            StrClassData = "NOKEY"; 
+            break;
+        case "4":
+            StrClassData = "off"; 
+            break;
+        case "5":
+            StrClassData = "on"; 
+            break;
+        case "6":
+            StrClassData = "BLINK" ; 
+            break;
       default:
         StrClassData = "WEBS_NOKEY"; 
     }
-	
+    
     return StrClassData; 
 
 } 
