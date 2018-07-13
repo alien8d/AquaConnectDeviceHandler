@@ -11,11 +11,12 @@
  *  for the specific language governing permissions and limitations under the License.
  *
  */
- 
+ //C0A80264:50
+
 import groovy.json.JsonSlurper
 
 metadata {
-    definition (name: "Hayward Aqua Connect", namespace: "SteveTheGeekAH", author: "Steve The Geek") {
+    definition (name: "AquaConnect", namespace: "CloudyMcCloud", author: "PJ") {
         capability "Polling"
         capability "Refresh"
         capability "Switch"
@@ -103,49 +104,49 @@ metadata {
 
          standardTile("lightsStatus", "lightsStatus", width: 1, height: 1, decoration: "flat") {
             state "off", label: 'Lights ${currentValue}', action: "lightsOn",
-                  icon: "st.Lighting.light21", backgroundColor: "#ffffff"
+                  icon: "st.Lighting.light11", backgroundColor: "#ffffff"
             state "on", label: 'Lights ${currentValue}', action: "lightsOff",
-                  icon: "st.Lighting.light21", backgroundColor: "#79b821"
+                  icon: "st.Lighting.light11", backgroundColor: "#79b821"
         }
 
          standardTile("bubblesStatus", "bubblesStatus", width: 1, height: 1, decoration: "flat") {
             state "off", label: 'Bubbles ${currentValue}', action: "lightsOn",
-                  icon: "st.Lighting.light21", backgroundColor: "#ffffff"
+                  icon: "st.Appliances.appliances11", backgroundColor: "#ffffff"
             state "on", label: 'Bubbles ${currentValue}', action: "lightsOff",
-                  icon: "st.Lighting.light21", backgroundColor: "#79b821"
+                  icon: "st.Appliances.appliances11", backgroundColor: "#79b821"
         }
 
          standardTile("boostStatus", "boostStatus", width: 1, height: 1, decoration: "flat") {
             state "off", label: 'Boost ${currentValue}', action: "lightsOn",
-                  icon: "st.Lighting.light21", backgroundColor: "#ffffff"
+                  icon: "st.Bath.bath13", backgroundColor: "#ffffff"
             state "on", label: 'Boost ${currentValue}', action: "lightsOff",
-                  icon: "st.Lighting.light21", backgroundColor: "#79b821"
+                  icon: "st.Bath.bath13", backgroundColor: "#79b821"
         }
 
         standardTile("filterStatus", "filterStatus", width: 1, height: 1, decoration: "flat") {
             state "off", label: 'Filter ${currentValue}', action: "filterOn",
-                  icon: "st.Appliances.appliances17", backgroundColor: "#ffffff"
+                  icon: "st.Outdoor.outdoor13", backgroundColor: "#ffffff"
             state "on", label: 'Filter ${currentValue}', action: "filterOff",
-                  icon: "st.Appliances.appliances17", backgroundColor: "#79b821"
+                  icon: "st.Outdoor.outdoor13", backgroundColor: "#79b821"
         }
 
         standardTile("landscapeStatus", "landscapeStatus", width: 1, height: 1, decoration: "flat") {
             state "off", label: 'Landscape ${currentValue}', action: "filterOn",
-                  icon: "st.Appliances.appliances17", backgroundColor: "#ffffff"
+                  icon: "st.Outdoor.outdoor25", backgroundColor: "#ffffff"
             state "on", label: 'Landscape ${currentValue}', action: "filterOff",
-                  icon: "st.Appliances.appliances17", backgroundColor: "#79b821"
+                  icon: "st.Outdoor.outdoor25", backgroundColor: "#79b821"
         }
 
 
         valueTile("heaterStatus", "heaterStatus", width: 1, height: 1, canChangeIcon: true, decoration: "flat") {
-            state "default", label: '\n\n${currentValue}', action: "heaterStatus", backgroundColor: "#ffffff", icon: "st.Health & Wellness.health2"
+            state "default", label: '\n\n${currentValue}', action: "heaterStatus", backgroundColor: "#ffffff", icon: "st.Outdoor.outdoor10"
         } 
 
                 standardTile("heaterMode", "heaterMode", width: 1, height: 1, decoration: "flat") {
             state "off", label: 'Heater ${currentValue}',
-                  icon: "st.Weather.weather2", backgroundColor: "#ffffff"
+                  icon: "st.Outdoor.outdoor10", backgroundColor: "#ffffff"
             state "on", label: 'Heater ${currentValue}',
-                  icon: "st.Weather.weather2", backgroundColor: "#79b821"
+                  icon: "st.Outdoor.outdoor10", backgroundColor: "#79b821"
         }
 
          standardTile("systemStatus", "systemStatus", width: 1, height: 1, decoration: "flat") {
@@ -187,7 +188,7 @@ metadata {
         }         
         
         main "currentMode"
-        details(["currentMode", "poolTemp", "spaTemp", "airTemp", "filterStatus", "spaStatus", "lightsStatus", "heaterStatus", "riverStatus", "fallsStatus", "refresh", "line1","line2"])
+        details(["spaStatus", "riverStatus", "fallsStatus", "lightsStatus", "bubblesStatus", "boostStatus", "filterStatus", "landscapeStatus", "heaterStatus", "heatherMode", "systemStatus", "refresh", "line1","line2"])
     }
 
     preferences {
@@ -330,7 +331,7 @@ def spaOff() {
 }
 
 def heaterOn() {
-    sendEvent(name: "heatherMode", value: "on", isStateChange: true)
+    sendEvent(name: "heaterMode", value: "on", isStateChange: true)
     return postKey("WNewSt.htm", "13");
 }
 
